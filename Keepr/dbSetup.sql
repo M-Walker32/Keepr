@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS accounts(
 ) default charset utf8 COMMENT '';
 
 CREATE TABLE IF NOT EXISTS vaults(
-    id INT NOT NULL primary key COMMENT 'primary key',
+    id INT AUTO_INCREMENT primary key COMMENT 'primary key',
     name TEXT NOT NULL,
     description TEXT NOT NULL,
     isPrivate BOOLEAN,
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS vaults(
 ) default charset utf8;
 
 CREATE TABLE IF NOT EXISTS keeps(
-    id INT NOT NULL primary key COMMENT 'primary key',
+    id INT AUTO_INCREMENT primary key COMMENT 'primary key',
     name TEXT NOT NULL,
     description TEXT NOT NULL,
     img TEXT NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS keeps(
 ) default charset utf8;
 
 CREATE TABLE IF NOT EXISTS vaultKeeps(
-    id VARCHAR(255) NOT NULL primary key COMMENT 'primary key',
+    id INT AUTO_INCREMENT primary key COMMENT 'primary key',
     vaultId INT NOT NULL,
     keepId INT NOT NULL,
     creatorId VARCHAR(255) NOT NULL,
@@ -43,4 +43,37 @@ DROP TABLE keeps;
 
 DROP TABLE vaults;
 
-DROP TABLE vaultkeeps;
+DROP TABLE vaultKeeps;
+
+INSERT INTO
+    keeps (
+        name,
+        description,
+        img,
+        views,
+        kept,
+        creatorId
+    )
+VALUES
+    (
+        "dog",
+        "good floofy dog",
+        "https://thiscatdoesnotexist.com",
+        0,
+        0,
+        "62703c3e7700bb6623dd8a72"
+    );
+
+INSERT INTO
+    keeps (name, description, img, views, kept, creatorId)
+VALUES
+    (
+        'test',
+        'test',
+        'test',
+        0,
+        0,
+        '62703c3e7700bb6623dd8a72'
+    );
+
+SELECT LAST_INSERT_ID();
