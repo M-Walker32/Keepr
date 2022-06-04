@@ -52,5 +52,10 @@ namespace Keepr.Services
       }
       _repo.Delete(id);
     }
+    //  GET PROFILE VAULTS
+    internal object GetVaults(string id)
+    {
+      return _repo.GetVaults(id);
+    }
   }
 }

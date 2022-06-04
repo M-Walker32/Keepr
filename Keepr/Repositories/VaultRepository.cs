@@ -30,6 +30,24 @@ namespace Keepr.Repositories
         return vault;
       }, new { id }).FirstOrDefault();
     }
+    // GET VAULTS BY PROFILE
+
+    internal object GetVaults(string id)
+    {
+      string sql = @"
+      SELECT
+      v.*,
+      a.*
+      FROM vaults v
+      JOIN accounts a ON v.creatorId = a.id
+      WHERE creatorId = @id
+      ";
+      return _db.Query<Vault, Profile, Vault>(sql, (vault, profile) =>
+      {
+        vault.Creator = profile;
+        return vault;
+      }, new { id }).ToList();
+    }
     //  CREATE
     internal Vault Create(Vault vaultdata)
     {
@@ -62,5 +80,6 @@ namespace Keepr.Repositories
       DELETE FROM vaults WHERE id = @id LIMIT 1";
       _db.Execute(sql, new { id });
     }
+
   }
 }

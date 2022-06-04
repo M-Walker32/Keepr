@@ -31,6 +31,24 @@ namespace Keepr.Repositories
         return keep;
       }, new { id }).FirstOrDefault();
     }
+    //  GET PROFILE KEEPS
+    internal List<Keep> GetKeeps(string id)
+    {
+      string sql = @"
+      SELECT
+      k.*,
+      a.*
+      FROM keeps k
+      JOIN accounts a ON k.creatorId = a.id
+      WHERE creatorId = @id
+      ";
+      return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) =>
+      {
+        keep.Creator = profile;
+        return keep;
+      }, new { id }).ToList();
+    }
+
     // GET
     internal List<Keep> Get()
     {
@@ -61,7 +79,7 @@ namespace Keepr.Repositories
       return keepdata;
     }
     // EDIT
-    internal void Edit(Keep originial)
+    internal void Edit(Keep original)
     {
       string sql = @"
       UPDATE keeps
@@ -72,7 +90,7 @@ namespace Keepr.Repositories
        views = @Views,
        kept = @Kept
       WHERE id = @Id";
-      _db.Execute(sql, originial);
+      _db.Execute(sql, original);
     }
     // DELETE
     internal void Delete(int id)
