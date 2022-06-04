@@ -31,7 +31,6 @@ namespace Keepr.Repositories
       }, new { id }).FirstOrDefault();
     }
     // GET VAULTS BY PROFILE
-
     internal object GetVaults(string id)
     {
       string sql = @"
