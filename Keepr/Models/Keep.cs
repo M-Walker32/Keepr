@@ -9,6 +9,7 @@ namespace Keepr.Models
 
     public int Views { get; set; }
     public int Kept { get; set; }
+    public int vaultKeepId { get; set; }
     public string CreatorId { get; set; }
     public Profile Creator { get; set; }
 
