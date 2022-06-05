@@ -26,6 +26,7 @@ select {
     &:valid {
       border: 1px solid $success;
     }
+
     &:invalid {
       border: 1px solid $danger;
     }
@@ -35,4 +36,46 @@ select {
 form:invalid button[type="submit"] {
   filter: grayscale(1);
   pointer-events: none;
+}
+
+.keep {
+  border-radius: 1em;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: inline-block;
+  margin-top: 1em;
+}
+
+.img-keep:hover {
+  opacity: 0.75;
+  cursor: zoom-in;
+}
+
+.img-keep {
+  border-radius: 1em;
+}
+
+.keep-title {
+  text-overflow: ellipsis;
+}
+
+.bg-shadow {
+  position: absolute;
+  bottom: 0em;
+  border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 1em;
+  background: linear-gradient(rgba(0, 0, 0, 0.006), rgba(0, 0, 0, 0.53));
+  width: 100%;
+  height: 10vh;
+}
+
+.masonary {
+  columns: 4;
+  column-width: 20%;
+  margin: 2em;
+
+  div {
+    break-inside: avoid;
+  }
 }
