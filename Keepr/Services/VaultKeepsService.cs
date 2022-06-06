@@ -26,7 +26,8 @@ namespace Keepr.Services
     // GET VAULT KEEPS
     internal List<Keep> GetVaultKeeps(int id)
     {
-      return _repo.GetVaultKeeps(id);
+      List<Keep> keeps = _repo.GetVaultKeeps(id);
+      return keeps;
     }
     // CREATE
     internal VaultKeep Create(VaultKeep vaultkeepdata)

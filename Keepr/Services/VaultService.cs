@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Keepr.Models;
 using Keepr.Repositories;
 
@@ -14,14 +15,36 @@ namespace Keepr.Services
     // METHODS
     // GET BY ID
 
-    internal Vault Get(int id)
+    internal Vault Get(int id, string userId)
     {
       Vault vault = _repo.Get(id);
       if (vault == null)
       {
         throw new Exception("Invalid Id");
       }
-      return vault;
+      // if the vault is private and the
+      if (vault.IsPrivate && vault.CreatorId == userId)
+      {
+        return vault;
+      }
+      Vault publicVault = _repo.GetPublic(id);
+      if (publicVault == null)
+      {
+        throw new Exception("Invalid Id");
+      }
+      return publicVault;
+    }
+    //  GET PROFILE VAULTS
+    internal List<Vault> GetVaults(string id)
+    {
+      List<Vault> vaults = _repo.GetVaults(id);
+      vaults = vaults.FindAll(v => v.IsPrivate == false);
+      return vaults;
+    }
+    internal List<Vault> GetAccountVaults(string id, string userId)
+    {
+      List<Vault> vaults = _repo.GetVaults(id);
+      return vaults;
     }
     // CREATE
     internal Vault Create(Vault vaultdata)
@@ -31,7 +54,7 @@ namespace Keepr.Services
     // EDIT
     internal Vault Edit(Vault vaultdata)
     {
-      Vault original = Get(vaultdata.Id);
+      Vault original = Get(vaultdata.Id, vaultdata.CreatorId);
       if (original.CreatorId != vaultdata.CreatorId)
       {
         throw new Exception("This is not your to edit");
@@ -40,22 +63,17 @@ namespace Keepr.Services
       original.Name = vaultdata.Name ?? original.Name;
       original.Description = vaultdata.Description ?? original.Description;
       _repo.Edit(original);
-      return Get(original.Id);
+      return Get(original.Id, vaultdata.CreatorId);
     }
     // DELETE
     internal void Delete(int id, string userId)
     {
-      Vault vault = Get(id);
+      Vault vault = Get(id, userId);
       if (vault.CreatorId != userId)
       {
         throw new Exception("You cannot delete this");
       }
       _repo.Delete(id);
-    }
-    //  GET PROFILE VAULTS
-    internal object GetVaults(string id)
-    {
-      return _repo.GetVaults(id);
     }
   }
 }

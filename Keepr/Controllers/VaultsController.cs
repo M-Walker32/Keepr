@@ -22,11 +22,17 @@ namespace Keepr.Controllers
     // METHODS
     // GET VAULTKEEPS ('vaults/id/keeps')
     [HttpGet("{id}/keeps")]
-    public ActionResult<List<Keep>> GetVaultKeeps(int id)
+    public async Task<ActionResult<List<Keep>>> GetVaultKeeps(int id)
     {
       try
       {
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        Vault found = _vs.Get(id, userInfo?.Id);
         List<Keep> keeps = _vks.GetVaultKeeps(id);
+        if (found.IsPrivate)
+        {
+          return BadRequest("Private Keeps");
+        }
         return Ok(keeps);
       }
       catch (Exception e)
@@ -36,11 +42,12 @@ namespace Keepr.Controllers
     }
     // GET BY ID
     [HttpGet("{id}")]
-    public ActionResult<Vault> Get(int id)
+    public async Task<ActionResult<Vault>> Get(int id)
     {
       try
       {
-        Vault vault = _vs.Get(id);
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        Vault vault = _vs.Get(id, userInfo?.Id);
         return Ok(vault);
       }
       catch (Exception e)

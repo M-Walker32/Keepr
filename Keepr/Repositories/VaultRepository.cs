@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Dapper;
@@ -20,9 +21,9 @@ namespace Keepr.Repositories
       SELECT
         a.*,
         v.*
-      FROM vaults v
-      JOIN accounts a ON v.creatorId = a.Id
-      WHERE v.id = @id
+        FROM vaults v
+        JOIN accounts a ON v.creatorId = a.Id
+        WHERE v.id = @id
       ";
       return _db.Query<Account, Vault, Vault>(sql, (account, vault) =>
       {
@@ -30,8 +31,26 @@ namespace Keepr.Repositories
         return vault;
       }, new { id }).FirstOrDefault();
     }
+    // GET BY ID
+    internal Vault GetPublic(int id)
+    {
+      string sql = @"
+      SELECT
+        a.*,
+        v.*
+        FROM vaults v
+        JOIN accounts a ON v.creatorId = a.Id
+        WHERE v.id = @id AND v.isPrivate = FALSE
+      ";
+      return _db.Query<Account, Vault, Vault>(sql, (account, vault) =>
+      {
+        vault.Creator = account;
+        return vault;
+      }, new { id }).FirstOrDefault();
+    }
+
     // GET VAULTS BY PROFILE
-    internal object GetVaults(string id)
+    internal List<Vault> GetVaults(string id)
     {
       string sql = @"
       SELECT
@@ -40,6 +59,22 @@ namespace Keepr.Repositories
       FROM vaults v
       JOIN accounts a ON v.creatorId = a.id
       WHERE creatorId = @id
+      ";
+      return _db.Query<Vault, Profile, Vault>(sql, (vault, profile) =>
+      {
+        vault.Creator = profile;
+        return vault;
+      }, new { id }).ToList();
+    }
+    internal object GetPublicVaults(string id)
+    {
+      string sql = @"
+      SELECT
+      v.*,
+      a.*
+      FROM vaults v
+      JOIN accounts a ON v.creatorId = a.id
+      WHERE creatorId = @id AND NOT v.isPrivate
       ";
       return _db.Query<Vault, Profile, Vault>(sql, (vault, profile) =>
       {

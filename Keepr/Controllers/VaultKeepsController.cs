@@ -25,6 +25,10 @@ namespace Keepr.Controllers
       try
       {
         Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        // if (userInfo == null)
+        // {
+        //   throw new Exception("Please Login");
+        // }
         vaultkeepdata.CreatorId = userInfo.Id;
         VaultKeep vaultkeep = _vks.Create(vaultkeepdata);
         vaultkeep.Creator = userInfo;
