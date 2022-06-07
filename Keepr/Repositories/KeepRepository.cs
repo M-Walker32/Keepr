@@ -14,6 +14,17 @@ namespace Keepr.Repositories
       _db = db;
     }
     // METHODS
+    // INCREASE KEEP
+    internal void IncreaseView(Keep keep, int id)
+    {
+      string sql = @"
+      UPDATE keeps
+      SET 
+        views  = @Views + 1
+      WHERE keeps.Id = @id
+      ";
+      _db.Execute(sql, keep);
+    }
     // GET BY ID
     internal Keep Get(int id)
     {
@@ -28,6 +39,7 @@ namespace Keepr.Repositories
       return _db.Query<Account, Keep, Keep>(sql, (account, keep) =>
       {
         keep.Creator = account;
+        // keep.Views++;
         return keep;
       }, new { id }).FirstOrDefault();
     }

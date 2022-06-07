@@ -79,3 +79,13 @@ form:invalid button[type="submit"] {
     break-inside: avoid;
   }
 }
+
+.masonary {
+  columns: 6;
+  column-width: 20%;
+  margin: 2em;
+
+  div {
+    break-inside: avoid;
+  }
+}

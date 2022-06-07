@@ -43,6 +43,7 @@ import { ref } from "@vue/reactivity"
 import { keepsService } from "../services/KeepsService.js"
 import { logger } from "../utils/Logger.js"
 import Pop from "../utils/Pop.js"
+import { Modal } from "bootstrap"
 export default {
   setup() {
     const editable = ref({})
@@ -51,9 +52,12 @@ export default {
       async createKeep() {
         try {
           await keepsService.createKeep(editable.value)
+          Modal.getOrCreateInstance(document.getElementById('create-keep-form')).hide()
+          editable.value = ''
         } catch (error) {
           logger.error(error)
           Pop.toast(error.message, 'error')
+          editable.value = ''
         }
       }
     }

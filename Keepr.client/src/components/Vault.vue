@@ -1,9 +1,13 @@
 <template>
   <div
-    class="keep position-relative bg-dark elevation-2"
+    class="keep position-relative bg-secondary elevation-2"
     @click="vaultPage(vault.id)"
   >
-    <img class="img-fluid img-keep" src="https://thiscatdoesnotexist.com" />
+    <!-- <div class="bg-secondary vault"></div> -->
+    <img
+      class="vault img-keep"
+      src="https://images.unsplash.com/photo-1454117096348-e4abbeba002c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Z2VvbWV0cnl8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
+    />
     <div class="bg-shadow">
       <h4 class="keep-title mx-2 text-light">{{ vault.name }}</h4>
     </div>
@@ -31,14 +35,14 @@ export default {
   },
   setup(props) {
     const router = useRouter()
-    onMounted(async () => {
-      try {
-        await keepsService.getVaultKeeps(props.vault.id)
-      } catch (error) {
-        logger.error(error)
-        Pop.toast(error.message, 'error')
-      }
-    })
+    // onMounted(async () => {
+    //   try {
+    //     await keepsService.getVaultKeeps(props.vault.id)
+    //   } catch (error) {
+    //     logger.error(error)
+    //     Pop.toast(error.message, 'error')
+    //   }
+    // })
     return {
       async vaultPage(vaultId) {
         try {
@@ -57,4 +61,8 @@ export default {
 
 
 <style lang="scss" scoped>
+.vault {
+  max-width: 100%;
+  max-height: 100%;
+}
 </style>

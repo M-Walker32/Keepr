@@ -42,6 +42,7 @@ import { logger } from "../utils/Logger.js"
 import Pop from "../utils/Pop.js"
 import { vaultsService } from "../services/VaultsService.js"
 import { AppState } from "../AppState.js"
+import { Modal } from "bootstrap"
 export default {
   setup() {
     const editable = ref({})
@@ -51,9 +52,12 @@ export default {
         try {
           editable.CreatorId = this.account.id
           await vaultsService.createVault(editable.value)
+          Modal.getOrCreateInstance(document.getElementById('create-vault-form')).hide()
+          editable.value = ''
         } catch (error) {
           logger.error(error)
           Pop.toast(error.message, 'error')
+          editable.value = ''
         }
       },
       account: computed(() => AppState.account)

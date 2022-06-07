@@ -45,7 +45,6 @@
                   </div>
                   <div class="col-12">
                     <div class="ms-2 d-flex justify-content-end">
-                      <!-- DROP DOWN WITH VAULT OPTIONS -->
                       <button
                         type="button"
                         class="btn btn-danger m-2"
@@ -53,9 +52,31 @@
                       >
                         Delete
                       </button>
-                      <button type="button" class="btn btn-primary m-2">
-                        Save
-                      </button>
+                      <!-- DROPDOWN -->
+
+                      <div class="dropdown">
+                        <button
+                          class="btn btn-secondary dropdown-toggle"
+                          type="button"
+                          id="dropdownMenuButton1"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          Save
+                        </button>
+                        <ul
+                          class="dropdown-menu"
+                          aria-labelledby="dropdownMenuButton1"
+                        >
+                          <li v-for="v in vaults" :key="v.id" :vaults="v">
+                            <a
+                              class="dropdown-item"
+                              @click.prevent="saveToVault(v.id)"
+                              >{{ v.name }}</a
+                            >
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -70,7 +91,7 @@
 
 
 <script>
-import { computed } from "@vue/reactivity"
+import { computed, ref } from "@vue/reactivity"
 import { AppState } from "../AppState.js"
 import { router } from "../router.js"
 import { profilesService } from "../services/ProfilesService.js"
@@ -79,10 +100,19 @@ import { logger } from "../utils/Logger.js"
 import Pop from "../utils/Pop.js"
 import { useRoute } from "vue-router"
 import { keepsService } from "../services/KeepsService.js"
+import { onMounted, watchEffect } from "@vue/runtime-core"
+import { vaultsService } from "../services/VaultsService.js"
+import { vaultKeepsService } from "../services/VaultKeepsService.js"
 export default {
   setup() {
+    const route = useRoute()
+    watchEffect(async () => {
+      let accountId = AppState.account.id
+      await vaultsService.getProfileVaults(accountId)
+    })
     return {
       keep: computed(() => AppState.activeKeep),
+      vaults: computed(() => AppState.myVaults),
       async profilePage(profileId) {
         try {
           await profilesService.getById(profileId)
@@ -102,6 +132,16 @@ export default {
             logger.error(error)
             Pop.toast(error.message, 'error')
           }
+        }
+
+      },
+      async saveToVault(vaultId) {
+        try {
+          const keepId = AppState.activeKeep.id
+          await vaultKeepsService.addToVault(vaultId, keepId)
+        } catch (error) {
+          logger.error(error)
+          Pop.toast(error.message, 'error')
         }
       }
     }

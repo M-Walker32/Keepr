@@ -24,6 +24,7 @@ namespace Keepr.Services
     internal Keep Get(int id)
     {
       Keep keep = _repo.Get(id);
+      _repo.IncreaseView(keep, id);
       if (keep == null)
       {
         throw new Exception("Invalid Id");
