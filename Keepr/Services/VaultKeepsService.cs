@@ -30,9 +30,14 @@ namespace Keepr.Services
       return keeps;
     }
     // CREATE
-    internal VaultKeep Create(VaultKeep vaultkeepdata)
+    internal VaultKeep Create(VaultKeep vaultkeepdata, Vault vault)
     {
-      return _repo.Create(vaultkeepdata);
+      VaultKeep vaultKeep = _repo.Create(vaultkeepdata);
+      if (vaultKeep.CreatorId == vault.CreatorId)
+      {
+        return vaultKeep;
+      }
+      throw new Exception("Not your vault");
     }
     // DELETE
     internal void Delete(int id, string userId)

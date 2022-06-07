@@ -64,6 +64,8 @@ namespace Keepr.Controllers
       {
         Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
         vaultdata.CreatorId = userInfo.Id;
+        Convert.ToBoolean(vaultdata.IsPrivate);
+        // vaultdata.IsPrivate = false;
         Vault vault = _vs.Create(vaultdata);
         vault.Creator = userInfo;
         return Ok(vault);
@@ -73,6 +75,7 @@ namespace Keepr.Controllers
         return BadRequest(e.Message);
       }
     }
+
     // EDIT
     [HttpPut("{id}")]
     [Authorize]

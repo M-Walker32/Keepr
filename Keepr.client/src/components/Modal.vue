@@ -46,6 +46,13 @@
                   <div class="col-12">
                     <div class="ms-2 d-flex justify-content-end">
                       <!-- DROP DOWN WITH VAULT OPTIONS -->
+                      <button
+                        type="button"
+                        class="btn btn-danger m-2"
+                        @click="deleteKeep(keep.id)"
+                      >
+                        Delete
+                      </button>
                       <button type="button" class="btn btn-primary m-2">
                         Save
                       </button>
@@ -71,8 +78,9 @@ import { Modal } from "bootstrap"
 import { logger } from "../utils/Logger.js"
 import Pop from "../utils/Pop.js"
 import { useRoute } from "vue-router"
+import { keepsService } from "../services/KeepsService.js"
 export default {
-  setup(props) {
+  setup() {
     return {
       keep: computed(() => AppState.activeKeep),
       async profilePage(profileId) {
@@ -83,6 +91,17 @@ export default {
         } catch (error) {
           logger.error(error)
           Pop.toast(error.message, 'error')
+        }
+      },
+      async deleteKeep(id) {
+        if (await Pop.confirm()) {
+          try {
+            await keepsService.deleteKeep(id)
+            Modal.getOrCreateInstance(document.getElementById('keep-modal')).hide()
+          } catch (error) {
+            logger.error(error)
+            Pop.toast(error.message, 'error')
+          }
         }
       }
     }
@@ -103,5 +122,8 @@ export default {
 }
 .height {
   max-height: 2em;
+}
+.hover-color {
+  color: red;
 }
 </style>

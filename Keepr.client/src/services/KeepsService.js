@@ -1,28 +1,39 @@
 import { AppState } from "../AppState.js"
 import { logger } from "../utils/Logger.js"
+import Pop from "../utils/Pop.js"
 import { api } from "./AxiosService.js"
 
 class KeepsService{
 async getKeeps(){
   const res = await api.get('api/keeps')
-  logger.log(res.data)
+  // logger.log(res.data)
   AppState.keeps = res.data
 }
 async getById(id)
 {
   const keep = await api.get('api/keeps/'+id)
-  logger.log(keep.data)
+  // logger.log(keep.data)
   AppState.activeKeep = keep.data
 }
 async getProfileKeeps(id){
   const res = await api.get(`api/profiles/${id}/keeps`)
-  logger.log(res.data)
+  // logger.log(res.data)
   AppState.myKeeps = res.data
 }
 async getVaultKeeps(vaultId){
   const res = await api.get(`api/vaults/${vaultId}/keeps`)
-  logger.log(res.data)
+  // logger.log(res.data)
   AppState.vaultKeeps = res.data
+}
+async createKeep(newKeep){
+  const keep = await api.post('api/keeps', newKeep)
+  logger.log(keep.data)
+  AppState.myKeeps.push(keep.data)
+}
+// TODO check if this works, get a toast success
+async deleteKeep(id){
+  await api.delete('api/keeps/'+id)
+  return Pop.toast("success")
 }
 }
 

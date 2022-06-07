@@ -12,9 +12,11 @@ namespace Keepr.Controllers
   public class VaultKeepsController : Controller
   {
     private readonly VaultKeepsService _vks;
-    public VaultKeepsController(VaultKeepsService vks)
+    private readonly VaultService _vs;
+    public VaultKeepsController(VaultKeepsService vks, VaultService vs)
     {
       _vks = vks;
+      _vs = vs;
     }
     // METHODS
     // CREATE
@@ -25,12 +27,9 @@ namespace Keepr.Controllers
       try
       {
         Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
-        // if (userInfo == null)
-        // {
-        //   throw new Exception("Please Login");
-        // }
         vaultkeepdata.CreatorId = userInfo.Id;
-        VaultKeep vaultkeep = _vks.Create(vaultkeepdata);
+        Vault vault = _vs.Get(vaultkeepdata.VaultId, userInfo.Id);
+        VaultKeep vaultkeep = _vks.Create(vaultkeepdata, vault);
         vaultkeep.Creator = userInfo;
         return Ok(vaultkeep);
       }

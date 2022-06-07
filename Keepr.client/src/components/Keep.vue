@@ -42,4 +42,9 @@ export default {
 
 
 <style lang="scss" scoped>
+.button-placement {
+  position: absolute;
+  right: 1em;
+  top: 1em;
+}
 </style>
