@@ -5,10 +5,10 @@
         <div class="modal-body p-0">
           <div class="container-fluid p-0">
             <div class="row m-0 p-0">
-              <div class="col-6 m-0 p-0">
+              <div class="col-md-6 col-12 m-0 p-0">
                 <img class="modal-img bg-dark" :src="keep.img" />
               </div>
-              <div class="col-6 h-100">
+              <div class="col-md-6 col-12 h-100">
                 <div class="row h-100">
                   <div class="col-12 d-flex justify-content-end">
                     <button
@@ -71,7 +71,7 @@
                           <li v-for="v in vaults" :key="v.id" :vaults="v">
                             <a
                               class="dropdown-item"
-                              @click.prevent="saveToVault(v.id)"
+                              @click.prevent="saveToVault(v.name, v.id)"
                               >{{ v.name }}</a
                             >
                           </li>
@@ -135,10 +135,11 @@ export default {
         }
 
       },
-      async saveToVault(vaultId) {
+      async saveToVault(vaultName, vaultId) {
         try {
           const keepId = AppState.activeKeep.id
           await vaultKeepsService.addToVault(vaultId, keepId)
+          Pop.toast("Saved to " + vaultName + " vault", "success")
         } catch (error) {
           logger.error(error)
           Pop.toast(error.message, 'error')
@@ -151,19 +152,4 @@ export default {
 
 
 <style lang="scss" scoped>
-.modal-img {
-  object-fit: cover;
-  height: 60vh;
-  width: 100%;
-  border-start-start-radius: 0.3em;
-}
-.modal-img:hover {
-  opacity: 0.75;
-}
-.height {
-  max-height: 2em;
-}
-.hover-color {
-  color: red;
-}
 </style>

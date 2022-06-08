@@ -22,7 +22,6 @@ namespace Keepr.Services
       {
         throw new Exception("Invalid Id");
       }
-      // if the vault is private and the
       if (vault.IsPrivate && vault.CreatorId == userId)
       {
         return vault;
@@ -41,6 +40,7 @@ namespace Keepr.Services
       vaults = vaults.FindAll(v => v.IsPrivate == false);
       return vaults;
     }
+    // Get Account Vaults
     internal List<Vault> GetAccountVaults(string id, string userId)
     {
       List<Vault> vaults = _repo.GetVaults(id);

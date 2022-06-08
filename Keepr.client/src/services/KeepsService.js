@@ -13,7 +13,7 @@ async getById(id)
 {
   const keep = await api.get('api/keeps/'+id)
   keep.views +=1
-  logger.log(keep.data)
+  // logger.log(keep.data)
   AppState.activeKeep = keep.data
 }
 async getProfileKeeps(id){
@@ -23,12 +23,12 @@ async getProfileKeeps(id){
 }
 async getVaultKeeps(vaultId){
   const res = await api.get(`api/vaults/${vaultId}/keeps`)
-  logger.log('vaultkeeps',res.data)
+  // logger.log('vaultkeeps',res.data)
   AppState.vaultKeeps = res.data
 }
 async createKeep(newKeep){
   const keep = await api.post('api/keeps', newKeep)
-  logger.log(keep.data)
+  // logger.log(keep.data)
   AppState.myKeeps.unshift(keep.data)
 }
 // TODO check if this works, get a toast success

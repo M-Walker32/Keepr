@@ -39,7 +39,7 @@ export default {
     onMounted(async () => {
       try {
         await vaultsService.getById(route.params.id)
-        await keepsService.getVaultKeeps(route.params.id)
+        // await keepsService.getVaultKeeps(route.params.id)
       } catch (error) {
         Pop.error("Invalid Entry")
         router.push({ name: 'Home' })

@@ -54,10 +54,25 @@ form:invalid button[type="submit"] {
 
 .img-keep {
   border-radius: 1em;
+  bottom: 0em;
 }
 
 .keep-title {
   text-overflow: ellipsis;
+  justify-content: end;
+}
+
+
+.modal-img:hover {
+  opacity: 0.75;
+}
+
+.height {
+  max-height: 2em;
+}
+
+.hover-color {
+  color: red;
 }
 
 .bg-shadow {
@@ -70,22 +85,43 @@ form:invalid button[type="submit"] {
   height: 10vh;
 }
 
-.masonary {
-  columns: 4;
-  column-width: 20%;
-  margin: 2em;
 
-  div {
-    break-inside: avoid;
+// Medium + screens
+@media only screen and (min-width: 768px) {
+  .masonary {
+    columns: 6;
+    column-width: 20%;
+    margin: 2em;
+
+    div {
+      break-inside: avoid;
+    }
+  }
+
+  .modal-img {
+    object-fit: cover;
+    max-height: 60vh;
+    width: 100%;
+    border-start-start-radius: 0.3em;
   }
 }
 
-.masonary {
-  columns: 6;
-  column-width: 20%;
-  margin: 2em;
+// Small Screens
+@media only screen and (max-width: 768px) {
+  .masonary {
+    columns: 2;
+    column-width: 20%;
+    margin: 2em;
 
-  div {
-    break-inside: avoid;
+    div {
+      break-inside: avoid;
+    }
+  }
+
+  .modal-img {
+    object-fit: cover;
+    max-height: 20vh;
+    width: 100%;
+    border-start-start-radius: 0.3em;
   }
 }
