@@ -20,6 +20,7 @@
   <h2 class="ms-4">
     Vaults
     <button
+      v-if="profile.id == account.id"
       class="btn btn-outline-primary"
       data-bs-toggle="modal"
       data-bs-target="#create-vault-form"
@@ -35,7 +36,8 @@
   <hr />
   <h2 class="ms-4">
     Keeps<button
-      class="btn btn-outline-primary"
+      v-if="profile.id == account.id"
+      class="btn btn-outline-primary ms-2"
       data-bs-toggle="modal"
       data-bs-target="#create-keep-form"
       title="create keep"
@@ -96,6 +98,7 @@ export default {
       openModal() {
 
       },
+      account: computed(() => AppState.account),
       profile: computed(() => AppState.activeProfile),
       vaults: computed(() => AppState.myVaults),
       keeps: computed(() => AppState.myKeeps)

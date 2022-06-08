@@ -11,7 +11,7 @@
       :alt="vault.name"
     />
     <div class="bg-shadow">
-      <h4 class="keep-title mx-2 text-light">
+      <h4 class="keep-title p-2 text-light d-flex h-100 align-items-end">
         <span v-if="vault.isPrivate" class="mdi mdi-lock"> </span
         >{{ vault.name }}
       </h4>

@@ -7,6 +7,8 @@
         type="text"
         class="form-control"
         id="name"
+        required
+        max="50"
         placeholder="Cheesecake Recipe"
         v-model="editable.name"
       />
@@ -18,6 +20,8 @@
         type="text"
         class="form-control"
         id="description"
+        required
+        max="100"
         placeholder="description..."
         v-model="editable.description"
       />
@@ -29,11 +33,15 @@
         type="text"
         class="form-control"
         id="img"
+        required
+        max="250"
         placeholder="https://thiscatdoesnotexist.com"
         v-model="editable.img"
       />
     </div>
-    <button type="submit">Create</button>
+    <button type="submit" class="btn btn-secondary mt-2" title="Create Keep">
+      Create
+    </button>
   </form>
 </template>
 

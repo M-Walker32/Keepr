@@ -9,6 +9,8 @@
         id="name"
         placeholder="Cheesecakes"
         v-model="editable.name"
+        required
+        max="50"
       />
     </div>
     <!-- description -->
@@ -20,6 +22,8 @@
         id="description"
         placeholder="description..."
         v-model="editable.description"
+        required
+        max="250"
       />
     </div>
     <div>
@@ -30,7 +34,9 @@
       />
       <label for="isPrivate" class="ms-1">Private Vault</label>
     </div>
-    <button type="submit">Create</button>
+    <button type="submit" class="btn btn-secondary mt-2" title="Create Keep">
+      Create
+    </button>
   </form>
 </template>
 
