@@ -1,5 +1,5 @@
 <template>
-  <span class="navbar-text">
+  <span v-if="route.name == 'Home'" class="navbar-text">
     <button
       class="btn selectable text-success lighten-30 text-uppercase my-2 my-lg-0"
       @click="login"
@@ -22,7 +22,7 @@
             height="40"
             class="rounded"
           />
-          <span class="mx-3 text-success lighten-30">{{ account.name }}</span>
+          <span class="mx-3 text-secondary">{{ account.name }}</span>
         </div>
       </div>
       <div
@@ -51,9 +51,12 @@
 import { computed } from "@vue/reactivity";
 import { AppState } from "../AppState";
 import { AuthService } from "../services/AuthService";
+import { useRoute } from "vue-router";
 export default {
   setup() {
+    const route = useRoute()
     return {
+      route,
       user: computed(() => AppState.user),
       account: computed(() => AppState.account),
       async login() {

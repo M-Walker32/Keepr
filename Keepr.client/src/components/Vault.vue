@@ -1,12 +1,14 @@
 <template>
   <div
     class="keep position-relative bg-secondary elevation-2"
+    title="open vault"
     @click="vaultPage(vault.id)"
   >
     <!-- <div class="bg-secondary vault"></div> -->
     <img
       class="vault img-keep"
       src="https://images.unsplash.com/photo-1454117096348-e4abbeba002c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Z2VvbWV0cnl8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
+      :alt="vault.name"
     />
     <div class="bg-shadow">
       <h4 class="keep-title mx-2 text-light">

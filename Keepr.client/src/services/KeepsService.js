@@ -13,6 +13,7 @@ async getById(keepId)
 {
     const keep = await api.get('api/keeps/'+ keepId)
     logger.log(keep.data)
+    keep.data.views +=1
     AppState.activeKeep = keep.data  
 }
 async getProfileKeeps(id){
@@ -33,6 +34,7 @@ async createKeep(newKeep){
 async deleteKeep(id){
   await api.delete('api/keeps/'+id)
   AppState.myKeeps = AppState.myKeeps.filter(k => k.id !== id)
+  AppState.keeps = AppState.keeps.filter(k => k.id !== id)
   return Pop.toast("Keep Deleted","success")
 }
 async unSaveKeep(vaultKeepId, vaultId){

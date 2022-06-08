@@ -20,11 +20,12 @@
                   </div>
                   <div class="col-12 d-flex align-items-center">
                     <h1 class="ms-2">{{ keep.name }}</h1>
-                    <h5>
+                    <h5 class="ms-2">
                       <span class="ms-2 mdi mdi-eye"> </span> {{ keep.views }}
                     </h5>
                     <h5>
-                      <span class="ms-2 mdi mdi-pin"> </span> {{ keep.kept }}
+                      <span class="ms-2 mdi mdi-alpha-k"> </span>
+                      {{ keep.kept }}
                     </h5>
                   </div>
                   <div class="col-12">
@@ -32,47 +33,48 @@
                   </div>
                   <div class="col-12 d-flex align-items-center">
                     <h6 class="ms-2">Uploaded by:</h6>
-                    <!-- <img
-                      class="img-fluid rounded-circle height ms-1"
-                      :src="keep.creator.picture"
-                    /> -->
                     <h5
-                      class="ms-2 text-bold selectable"
+                      class="ms-2 text-info darken-20 selectable"
                       @click="profilePage(keep.creator.id)"
+                      title="Go to Profile"
                     >
                       {{ keep.creator?.name }}
                     </h5>
                   </div>
-                  <div class="col-12">
-                    <div class="ms-2 d-flex justify-content-end">
+                  <div class="col-12 justify-items-end d-flex h-100">
+                    <div class="ms-2 d-flex align-items-end">
                       <button
                         v-if="keep.creator?.id == account?.id"
                         type="button"
-                        class="btn btn-danger m-2"
+                        title="delete keep"
+                        class="btn btn-primary m-2"
                         @click="deleteKeep(keep.id)"
                       >
                         Delete
                       </button>
-                      <!-- <div v-if="keep.vaultKeepId"> -->
-                      <button
-                        type="button"
-                        class="btn btn-danger m-2"
-                        @click="unSaveKeep(keep.vaultKeepId)"
-                      >
-                        UnSave
-                      </button>
-                      <!-- </div> -->
-                      <!-- DROPDOWN -->
 
+                      <div v-if="route.name == 'Vault'">
+                        <button
+                          type="button"
+                          title="unSave from Vault"
+                          v-if="keep.vaultKeepId"
+                          class="btn btn-info m-2"
+                          @click="unSaveKeep(keep.vaultKeepId)"
+                        >
+                          UnKeep
+                        </button>
+                      </div>
                       <div class="dropdown">
                         <button
-                          class="btn btn-secondary dropdown-toggle"
+                          v-if="account.id"
+                          title="Save to vault"
+                          class="btn btn-secondary dropdown-toggle m-2"
                           type="button"
                           id="dropdownMenuButton1"
                           data-bs-toggle="dropdown"
                           aria-expanded="false"
                         >
-                          Save
+                          Keep
                         </button>
                         <ul
                           class="dropdown-menu"
@@ -81,6 +83,7 @@
                           <li v-for="v in vaults" :key="v.id" :vaults="v">
                             <a
                               class="dropdown-item"
+                              :title="v.name"
                               @click.prevent="saveToVault(v.name, v.id)"
                               >{{ v.name }}</a
                             >
@@ -117,6 +120,7 @@ export default {
   setup() {
     const route = useRoute()
     return {
+      route,
       keep: computed(() => AppState.activeKeep),
       vaults: computed(() => AppState.myVaults),
       account: computed(() => AppState.account),

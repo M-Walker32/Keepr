@@ -1,11 +1,19 @@
 <template>
   <div
     class="keep position-relative bg-dark elevation-2"
+    title="expand keep"
     @click="setActive(keep.id)"
   >
-    <img class="img-fluid img-keep" :src="keep.img" />
-    <div class="bg-shadow">
-      <h4 class="keep-title mx-2 text-light">{{ keep.name }}</h4>
+    <img class="img-fluid img-keep" :src="keep.img" :alt="keep.name" />
+    <div class="bg-shadow d-flex d-flex align-items-end">
+      <img
+        :src="keep.creator.picture"
+        class="profile-keep-img m-2 hover"
+        :alt="keep.creator.name"
+      />
+      <h4 class="p-1 keep-title text-light hover">
+        {{ keep.name }}
+      </h4>
     </div>
   </div>
 </template>

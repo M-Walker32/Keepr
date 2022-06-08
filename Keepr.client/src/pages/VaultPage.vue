@@ -1,19 +1,26 @@
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
-      <div class="col-12">
+      <div class="col-12 mt-2 p-5">
         <div class="d-flex">
-          <h1>{{ vault.name }}</h1>
-          <i v-if="vault.isPrivate" class="mdi mdi-lock"> </i>
+          <h1>
+            {{ vault.name }}<i v-if="vault.isPrivate" class="mdi mdi-lock"> </i>
+          </h1>
+        </div>
+        <div class="d-flex">
           <button
-            class="btn btn-outline-danger ms-1"
+            class="btn btn-outline-primary mx-2"
             title="delete vault"
             @click="deleteVault(vault.id)"
           >
             Delete
           </button>
+          <h5>
+            {{ vault.description }} <br />
+            Keeps: {{ keeps.length }}
+          </h5>
         </div>
-        <h6>{{ vault.description }}</h6>
+
         <!-- <div>{{ keeps[0] }}</div> -->
       </div>
     </div>
@@ -51,6 +58,7 @@ export default {
         try {
           if (await Pop.confirm()) {
             await vaultsService.deleteVault(id)
+            Pop.toast("Vault Deleted", "success")
             router.push({ name: 'Home' })
           }
         } catch (error) {

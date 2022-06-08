@@ -7,10 +7,13 @@
       navbar-dark
       bg-primary
       px-3
+      shadow
     "
   >
     <router-link :to="{ name: 'Home' }">
-      <h2 class="text-dark">Keepr</h2>
+      <h2 class="text-secondary" title="Return to Home Page">
+        <span class="mdi mdi-alpha-k-box"></span>eepr
+      </h2>
     </router-link>
     <div><Login /></div>
   </nav>
