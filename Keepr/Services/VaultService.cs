@@ -37,8 +37,8 @@ namespace Keepr.Services
     internal List<Vault> GetVaults(string id)
     {
       List<Vault> vaults = _repo.GetVaults(id);
-      vaults = vaults.FindAll(v => v.IsPrivate == false);
-      return vaults;
+      List<Vault> filteredVaults = vaults.FindAll(v => v.IsPrivate == false);
+      return filteredVaults;
     }
     // Get Account Vaults
     internal List<Vault> GetAccountVaults(string id, string userId)

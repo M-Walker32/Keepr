@@ -35,7 +35,7 @@ namespace Keepr.Repositories
       string sql = @"
       SELECT
         a.*,
-        vk.Id,
+        vk.*,
         k.*
         FROM vaultKeeps vk
         JOIN vaults v ON v.Id = vk.vaultId
@@ -45,7 +45,7 @@ namespace Keepr.Repositories
       return _db.Query<Account, VaultKeep, Keep, Keep>(sql, (a, vaultkeep, keep) =>
       {
         keep.Creator = a;
-        keep.vaultKeepId = vaultkeep.Id;
+        // keep.vaultKeepId = vaultkeep.Id;
         return keep;
       }, new { id }).ToList();
     }

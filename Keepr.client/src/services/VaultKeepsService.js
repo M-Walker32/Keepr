@@ -14,6 +14,8 @@ async addToVault(vaultId, keepId){
   const keep = await api.get('api/keeps/'+ keepId)
   keep.data.views -=1
   AppState.activeKeep = keep.data
+  AppState.myVaultKeeps.push(keep.data)
+  logger.log(keep.data)
 }
 }
 export const vaultKeepsService = new VaultKeepsService

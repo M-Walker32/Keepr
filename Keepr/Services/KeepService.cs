@@ -41,10 +41,10 @@ namespace Keepr.Services
       return _repo.Create(keepdata);
     }
     // Increase kept
-    internal Keep IncreaseKept(int id)
+    internal Keep UpdateKeep(int keepId, int vaultKeepId)
     {
-      Keep keep = _repo.Get(id);
-      _repo.IncreaseKept(keep, id);
+      Keep keep = _repo.Get(keepId);
+      _repo.UpdateKeep(keep, keep.Id, vaultKeepId);
       return keep;
     }
     // EDIT

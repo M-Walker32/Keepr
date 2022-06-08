@@ -26,14 +26,16 @@ namespace Keepr.Repositories
       _db.Execute(sql, keep);
     }
     // Increase kept
-    internal void IncreaseKept(Keep keep, int id)
+    internal void UpdateKeep(Keep keep, int id, int vaultKeep)
     {
       string sql = @"
       UPDATE keeps
       SET 
-        kept  = @Kept + 1
+        kept  = @Kept + 1,
+        vaultKeepId = @VaultKeepId
       WHERE keeps.Id = @id
       ";
+      keep.vaultKeepId = vaultKeep;
       _db.Execute(sql, keep);
     }
     // GET BY ID
@@ -93,9 +95,9 @@ namespace Keepr.Repositories
     {
       string sql = @"
       INSERT INTO keeps
-      (name, description, img, views, kept, creatorId)
+      (name, description, img, views, kept, vaultKeepId, creatorId)
       VALUES
-      (@Name, @Description, @Img, @Views, @Kept, @CreatorId);
+      (@Name, @Description, @Img, @Views, @Kept, @VaultKeepId, @CreatorId);
       SELECT LAST_INSERT_ID();";
       int id = _db.ExecuteScalar<int>(sql, keepdata);
       keepdata.Id = id;

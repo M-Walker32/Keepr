@@ -17,6 +17,9 @@ import { AppState } from "../AppState.js"
 import { logger } from "../utils/Logger.js"
 import Pop from "../utils/Pop.js"
 import { keepsService } from "../services/KeepsService.js"
+import { useRoute } from "vue-router"
+import { computed } from "@vue/reactivity"
+import { onMounted } from "@vue/runtime-core"
 export default {
   props: {
     keep: {
@@ -25,7 +28,9 @@ export default {
     }
   },
   setup() {
+    const route = useRoute()
     return {
+      activekeep: computed(() => AppState.activeKeep),
       async setActive(id) {
         try {
           await keepsService.getById(id)

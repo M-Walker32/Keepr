@@ -9,12 +9,11 @@ async getKeeps(){
   // logger.log(res.data)
   AppState.keeps = res.data
 }
-async getById(id)
+async getById(keepId)
 {
-  const keep = await api.get('api/keeps/'+id)
-  // keep.views +=1
-  // logger.log(keep.data)
-  AppState.activeKeep = keep.data
+    const keep = await api.get('api/keeps/'+ keepId)
+    logger.log(keep.data)
+    AppState.activeKeep = keep.data  
 }
 async getProfileKeeps(id){
   const res = await api.get(`api/profiles/${id}/keeps`)
@@ -31,11 +30,15 @@ async createKeep(newKeep){
   // logger.log(keep.data)
   AppState.myKeeps.unshift(keep.data)
 }
-// TODO check if this works, get a toast success
 async deleteKeep(id){
   await api.delete('api/keeps/'+id)
   AppState.myKeeps = AppState.myKeeps.filter(k => k.id !== id)
   return Pop.toast("Keep Deleted","success")
+}
+async unSaveKeep(vaultKeepId, vaultId){
+  const keep = await api.delete('api/vaultKeeps/'+vaultKeepId)
+  AppState.vaultKeeps = this.getVaultKeeps(vaultId)
+  return Pop.toast("Keep Removed from Vault","success")
 }
 }
 

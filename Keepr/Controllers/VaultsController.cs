@@ -40,6 +40,23 @@ namespace Keepr.Controllers
         return BadRequest(e.Message);
       }
     }
+    // // GET VAULTKEEPS BY ID ('vaults/id/keeps')
+    // [HttpGet("{id}/keeps/{id}")]
+    // public async Task<ActionResult<Keep>> GetVaultKeepById(int vaultid, int keepid)
+    // {
+    //   try
+    //   {
+    //     Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+    //     // Vault found = _vs.Get(vaultid, userInfo?.Id);
+    //     // List<Keep> keeps = _vks.GetVaultKeeps(id);
+    //     Keep keep = _vks.Get()
+    //     return Ok(keep);
+    //   }
+    //   catch (Exception e)
+    //   {
+    //     return BadRequest(e.Message);
+    //   }
+    // }
     // GET BY ID
     [HttpGet("{id}")]
     public async Task<ActionResult<Vault>> Get(int id)

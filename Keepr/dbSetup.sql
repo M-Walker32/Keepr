@@ -23,7 +23,9 @@ CREATE TABLE IF NOT EXISTS keeps(
     img TEXT NOT NULL,
     views INT,
     kept INT,
+    vaultKeepId INT,
     creatorId VARCHAR(255) NOT NULL,
+    -- FOREIGN KEY (vaultKeepId) REFERENCES vaultKeeps(id),
     FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
 ) default charset utf8;
 

@@ -14,6 +14,7 @@
           </button>
         </div>
         <h6>{{ vault.description }}</h6>
+        <!-- <div>{{ keeps[0] }}</div> -->
       </div>
     </div>
   </div>
@@ -34,7 +35,6 @@ import { vaultsService } from "../services/VaultsService.js"
 import { useRoute, useRouter } from "vue-router"
 export default {
   setup() {
-    let vault = AppState.activeVault
     const router = useRouter()
     const route = useRoute()
     onMounted(async () => {

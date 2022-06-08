@@ -57,7 +57,7 @@ namespace Keepr.Controllers
       try
       {
         Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
-        if (userInfo.Id == id)
+        if (userInfo?.Id == id)
         {
           List<Vault> accountVaults = _vs.GetAccountVaults(id, userInfo.Id);
           return Ok(accountVaults);

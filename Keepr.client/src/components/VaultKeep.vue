@@ -44,24 +44,24 @@
                     </h5>
                   </div>
                   <div class="col-12">
-                    <div class="ms-2 d-flex justify-content-end">
+                    <div
+                      v-if="(keep.creatorId = account.id)"
+                      class="ms-2 d-flex justify-content-end"
+                    >
                       <button
-                        v-if="keep.creator?.id == account?.id"
                         type="button"
                         class="btn btn-danger m-2"
                         @click="deleteKeep(keep.id)"
                       >
-                        Delete
+                        Delete {{ keep.vaultKeepId }}
                       </button>
-                      <!-- <div v-if="keep.vaultKeepId"> -->
                       <button
                         type="button"
                         class="btn btn-danger m-2"
-                        @click="unSaveKeep(keep.vaultKeepId)"
+                        @click="removeVaultKeep(keep.id)"
                       >
-                        UnSave
+                        Unsave
                       </button>
-                      <!-- </div> -->
                       <!-- DROPDOWN -->
 
                       <div class="dropdown">
@@ -116,10 +116,13 @@ import { vaultKeepsService } from "../services/VaultKeepsService.js"
 export default {
   setup() {
     const route = useRoute()
+    // watchEffect(async () => {
+    //   let accountId = AppState.account.id
+    //   await vaultsService.getProfileVaults(accountId)
+    // })
     return {
       keep: computed(() => AppState.activeKeep),
       vaults: computed(() => AppState.myVaults),
-      account: computed(() => AppState.account),
       async profilePage(profileId) {
         try {
           await profilesService.getById(profileId)
@@ -147,15 +150,6 @@ export default {
           const keepId = AppState.activeKeep.id
           await vaultKeepsService.addToVault(vaultId, keepId)
           Pop.toast("Saved to " + vaultName + " vault", "success")
-        } catch (error) {
-          logger.error(error)
-          Pop.toast(error.message, 'error')
-        }
-      },
-      async unSaveKeep(vaultkeepId) {
-        try {
-          await keepsService.unSaveKeep(vaultkeepId, route.params.id)
-          Modal.getOrCreateInstance(document.getElementById('keep-modal')).hide()
         } catch (error) {
           logger.error(error)
           Pop.toast(error.message, 'error')
