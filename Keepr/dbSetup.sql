@@ -79,3 +79,15 @@ VALUES
     );
 
 SELECT LAST_INSERT_ID();
+
+SELECT
+    a.*,
+    vk.*,
+    k.*
+FROM
+    vaultKeeps vk
+    JOIN vaults v ON v.Id = vk.vaultId
+    JOIN keeps k ON k.Id = vk.keepId
+    JOIN accounts a ON k.creatorId = a.Id
+WHERE
+    v.Id = 27;

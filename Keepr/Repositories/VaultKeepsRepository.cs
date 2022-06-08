@@ -40,7 +40,7 @@ namespace Keepr.Repositories
         FROM vaultKeeps vk
         JOIN vaults v ON v.Id = vk.vaultId
         JOIN keeps k ON k.Id = vk.keepId
-        JOIN accounts a ON vk.creatorId = a.Id
+        JOIN accounts a ON k.creatorId = a.Id
         WHERE v.Id = @id;";
       return _db.Query<Account, VaultKeep, Keep, Keep>(sql, (a, vaultkeep, keep) =>
       {

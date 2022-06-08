@@ -12,7 +12,7 @@ async addToVault(vaultId, keepId){
   const newVaultKeep = await api.post('api/vaultkeeps', vaultKeep)
   logger.log(newVaultKeep.data)
   const keep = await api.get('api/keeps/'+ keepId)
-  keep.data.views -=1
+  // keep.data.views -=1
   AppState.activeKeep = keep.data
   AppState.myVaultKeeps.push(keep.data)
   logger.log(keep.data)

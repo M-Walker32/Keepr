@@ -61,7 +61,7 @@ export default {
         try {
           await keepsService.createKeep(editable.value)
           Modal.getOrCreateInstance(document.getElementById('create-keep-form')).hide()
-          editable.value = ''
+          editable.value = {}
         } catch (error) {
           logger.error(error)
           Pop.toast(error.message, 'error')
