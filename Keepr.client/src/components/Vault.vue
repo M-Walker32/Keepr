@@ -9,7 +9,10 @@
       src="https://images.unsplash.com/photo-1454117096348-e4abbeba002c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Z2VvbWV0cnl8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
     />
     <div class="bg-shadow">
-      <h4 class="keep-title mx-2 text-light">{{ vault.name }}</h4>
+      <h4 class="keep-title mx-2 text-light">
+        <span v-if="vault.isPrivate" class="mdi mdi-lock"> </span
+        >{{ vault.name }}
+      </h4>
     </div>
   </div>
 </template>

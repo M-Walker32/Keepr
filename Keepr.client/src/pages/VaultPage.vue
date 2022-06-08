@@ -4,6 +4,7 @@
       <div class="col-12">
         <div class="d-flex">
           <h1>{{ vault.name }}</h1>
+          <i v-if="vault.isPrivate" class="mdi mdi-lock"> </i>
           <button
             class="btn btn-outline-danger ms-1"
             title="delete vault"
