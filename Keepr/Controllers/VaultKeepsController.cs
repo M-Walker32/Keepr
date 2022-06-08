@@ -13,10 +13,12 @@ namespace Keepr.Controllers
   {
     private readonly VaultKeepsService _vks;
     private readonly VaultService _vs;
-    public VaultKeepsController(VaultKeepsService vks, VaultService vs)
+    private readonly KeepService _ks;
+    public VaultKeepsController(VaultKeepsService vks, VaultService vs, KeepService ks)
     {
       _vks = vks;
       _vs = vs;
+      _ks = ks;
     }
     // METHODS
     // CREATE
@@ -32,6 +34,7 @@ namespace Keepr.Controllers
         // Convert.ToInt32(vaultkeepdata.VaultId);
         Vault vault = _vs.Get(vaultkeepdata.VaultId, userInfo.Id);
         VaultKeep vaultkeep = _vks.Create(vaultkeepdata, vault);
+        _ks.IncreaseKept(vaultkeep.KeepId);
         vaultkeep.Creator = userInfo;
         return Ok(vaultkeep);
       }

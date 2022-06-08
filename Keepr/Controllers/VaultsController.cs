@@ -29,7 +29,7 @@ namespace Keepr.Controllers
         Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
         Vault found = _vs.Get(id, userInfo?.Id);
         List<Keep> keeps = _vks.GetVaultKeeps(id);
-        if (found.IsPrivate)
+        if (found.IsPrivate && userInfo.Id != found.CreatorId)
         {
           return BadRequest("Private Keeps");
         }

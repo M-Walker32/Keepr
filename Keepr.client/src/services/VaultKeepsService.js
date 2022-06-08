@@ -1,3 +1,4 @@
+import { AppState } from "../AppState.js"
 import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
 
@@ -10,6 +11,9 @@ async addToVault(vaultId, keepId){
   logger.log(vaultKeep)
   const newVaultKeep = await api.post('api/vaultkeeps', vaultKeep)
   logger.log(newVaultKeep.data)
+  const keep = await api.get('api/keeps/'+ keepId)
+  keep.data.views -=1
+  AppState.activeKeep = keep.data
 }
 }
 export const vaultKeepsService = new VaultKeepsService

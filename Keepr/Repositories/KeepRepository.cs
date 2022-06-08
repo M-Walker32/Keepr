@@ -25,6 +25,17 @@ namespace Keepr.Repositories
       ";
       _db.Execute(sql, keep);
     }
+    // Increase kept
+    internal void IncreaseKept(Keep keep, int id)
+    {
+      string sql = @"
+      UPDATE keeps
+      SET 
+        kept  = @Kept + 1
+      WHERE keeps.Id = @id
+      ";
+      _db.Execute(sql, keep);
+    }
     // GET BY ID
     internal Keep Get(int id)
     {

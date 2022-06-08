@@ -20,7 +20,6 @@ namespace Keepr.Services
     }
 
     // GET BY ID
-
     internal Keep Get(int id)
     {
       Keep keep = _repo.Get(id);
@@ -40,6 +39,13 @@ namespace Keepr.Services
     internal Keep Create(Keep keepdata)
     {
       return _repo.Create(keepdata);
+    }
+    // Increase kept
+    internal Keep IncreaseKept(int id)
+    {
+      Keep keep = _repo.Get(id);
+      _repo.IncreaseKept(keep, id);
+      return keep;
     }
     // EDIT
     internal Keep Edit(Keep keepdata)
