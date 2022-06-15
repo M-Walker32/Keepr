@@ -59,11 +59,11 @@ export default {
           editable.CreatorId = this.account.id
           await vaultsService.createVault(editable.value)
           Modal.getOrCreateInstance(document.getElementById('create-vault-form')).hide()
-          editable.value = ''
+          editable.value = {}
         } catch (error) {
           logger.error(error)
           Pop.toast(error.message, 'error')
-          editable.value = ''
+          editable.value = {}
         }
       },
       account: computed(() => AppState.account)
